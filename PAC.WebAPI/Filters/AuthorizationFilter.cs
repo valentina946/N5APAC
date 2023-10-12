@@ -8,9 +8,16 @@ namespace PAC.WebAPI.Filters
     {
         public virtual void OnAuthorization(AuthorizationFilterContext context)
         {
-            var authorizationHeader = context.HttpContext.Request.Headers[""].ToString();
+            var authorizationHeader = context.HttpContext.Request.Headers["Authorization"].ToString();
+
+            if (authorizationHeader != "true")
+            {
+                context.Result = new ObjectResult(new { Message = "No puedo authorizarme" })
+                {
+                    StatusCode = 401
+                };
+            }
         }
 
     }
 }
-
