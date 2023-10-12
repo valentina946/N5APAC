@@ -16,7 +16,6 @@ public class StudentControllerTest
     {
         private Mock<IStudentLogic>? mock;
         private StudentController? controller;
-        private Student? student;
 
         [TestInitialize]
         public void InitTest()
@@ -33,7 +32,7 @@ public class StudentControllerTest
             var student = new Student
             {
                 Id = 1,
-                Name = "Valentina",
+                Name = "Pedro",
             };
 
             var result = controller.Post(student);
@@ -57,8 +56,6 @@ public class StudentControllerTest
             mock.VerifyAll();
             Assert.AreEqual(500, statusCode);
         }
-
-
 
     }
 }

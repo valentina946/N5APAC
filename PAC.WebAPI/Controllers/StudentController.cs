@@ -22,23 +22,31 @@ namespace PAC.WebAPI
         }
 
         [HttpGet]
-        public IEnumerable<Student> GeAll()
+        public IActionResult GeAll()
         {
-            return _studentLogic.GetStudents();
+            var students = _studentLogic.GetStudents();
+            return Ok(students);
         }
 
         [HttpGet("{id}")]
-        public Student Get(int id)
+        public IActionResult Get(int id)
         {
-            return _studentLogic.GetStudentById(id);
+            var student = _studentLogic.GetStudentById(id);
+            return Ok(student);
         }
 
         [AuthorizationFilter]
         [HttpPost]
         public IActionResult Post([FromBody] Student value)
         {
-            _studentLogic.InsertStudents(value);
-            return Ok();
+            if (value.Id >0 && value.Name != null) {
+                _studentLogic.InsertStudents(value);
+                return Ok();
+            } else
+            {
+                return NotFound();
+            }
+          
         }
     }
 }
